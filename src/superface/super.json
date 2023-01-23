@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "vcs/single-file-content": {
+      "version": "1.1.1"
+    }
+  },
+  "providers": {}
+}

@@ -1,0 +1,26 @@
+from discord_webhook import DiscordWebhook
+from discord_webhook import DiscordEmbed
+import requests
+
+url = "https://raw.githubusercontent.com/AtroxEGO/PaulAddonsKotlin/master/version.txt"
+versionPage = requests.get(url)
+# webhook = DiscordWebhook(url="https://discord.com/api/webhooks/1063041798144000010/OQwASZdMjff70onEZb4fVwGRb2deUWYJ6_d8OdrUdX6b4AzMw7DVS5Pjog0rAl-bz-Ki", content="", username="Paul Notifier", avatar_url="https://i.imgur.com/RziTx0u.png")
+# webhook = DiscordWebhook(url="https://discord.com/api/webhooks/1062843046275850351/otnbj59EffjSq4LFI5PxmQog-53OpdcA3BtR_xxkC8qA7zkqbnsqkxWIFYAOhqxifm-Y", content="", username="Paul Notifier", avatar_url="https://i.imgur.com/RziTx0u.png")
+version = versionPage.text
+embed = DiscordEmbed("New Version: " + str(version),"", color= 1022550)
+embed.set_author(name='Detected new version of Paul Addons!', url='https://github.com/AtroxEGO/PaulAddonsKotlin/releases/latest')
+embed.set_footer(text='AtroxEGO#1952', icon_url='')
+embed.set_timestamp()
+embed.add_embed_field(name='Changes:', value='', inline=False)
+changes = requests.get("https://raw.githubusercontent.com/AtroxEGO/PaulAddonsKotlin/master/changes").text.split("\n")
+for change in changes:
+    embed.add_embed_field(name='', value=change, inline=False)
+embed.add_embed_field(name='', value='@here', inline=False)
+webhook.add_embed(embed)
+response = webhook.execute()
+
+webhook = DiscordWebhook(url="https://discord.com/api/webhooks/1062843046275850351/otnbj59EffjSq4LFI5PxmQog-53OpdcA3BtR_xxkC8qA7zkqbnsqkxWIFYAOhqxifm-Y", content="", username="Paul Notifier", avatar_url="https://i.imgur.com/RziTx0u.png")
+with open("latest.jar", "rb") as f:
+    jarName = "PaulAddons-"+str(version)+".jar"
+    webhook.add_file(file=f.read(), filename=jarName)
+    response = webhook.execute()
